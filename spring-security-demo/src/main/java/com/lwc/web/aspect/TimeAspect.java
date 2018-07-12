@@ -19,6 +19,10 @@ import java.util.Date;
 @Component
 public class TimeAspect {
 
+    /**
+     * ProceedingJoinPoint 就是给调用方法的信息；
+     * 原理：通过拦截器传过来
+     */
     @Around("execution(* com.lwc.web.controller.UserController.*(..))")
     public Object handleControllerMethod(ProceedingJoinPoint pjp) throws Throwable {
 

@@ -20,6 +20,9 @@ import java.util.Date;
 @Component
 public class TimeInterceptor implements HandlerInterceptor {
 
+    /**
+     * 某方法调用之前
+     */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
@@ -32,6 +35,9 @@ public class TimeInterceptor implements HandlerInterceptor {
         return true;
     }
 
+    /**
+     * 控制层被调用之前，如果抛出异常，这个方法不被调用
+     */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {
@@ -41,6 +47,9 @@ public class TimeInterceptor implements HandlerInterceptor {
 
     }
 
+    /**
+     * 这个方法总是给调用的
+     */
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
