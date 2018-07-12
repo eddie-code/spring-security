@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: demo
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://127.0.0.1:3306/test?characterEncoding=utf-8&useSSL=false
+#  关闭Session，因为会报错
+  session:
+    store-type: none
+  redis:
+    host: 192.168.56.101
+    port: 6379
+#    暂时关闭身份验证，因为访问 http://localhost:8080/hello 会弹出验证框
+security:
+  basic:
+    enabled: false
