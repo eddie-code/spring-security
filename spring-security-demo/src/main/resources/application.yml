@@ -14,11 +14,12 @@ spring:
     host: 192.168.1.113
 #    host: 192.168.56.101
     port: 6379
+lwc:
+  security:
+    browser:
+      loginType: REDIRECT #重定向
+#      loginPage: /demo-signln.html
 #    暂时关闭身份验证，因为访问 http://localhost:8080/hello 会弹出验证框
 #security:
 #  basic:
 #    enabled: false
-#lwc:
-#  security:
-#    browser:
-#      loginPage: /demo-signln.html
