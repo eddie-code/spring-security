@@ -46,6 +46,7 @@ public class FileController {
         return new FileInfo(localFile.getAbsolutePath());
     }
 
+    //http://localhost:8080/file/1531414089646
     @GetMapping("/{id}")
     public void download(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) throws Exception {
 

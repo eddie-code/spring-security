@@ -11,8 +11,13 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import sun.plugin.liveconnect.SecurityContextHelper;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -29,6 +34,35 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    /**
+     * 获取认证用户信息 （全部）
+     */
+    @GetMapping("/me")
+    public Object getCurrentUser(Authentication authentication) {
+
+        /**
+         * 1. http://localhost:8080/index.html
+         * 2. 登录 admin/123456
+         * 3. 修改地址 http://localhost:8080/user/me
+         */
+
+        //登录之后在 请求http://localhost:8080/user/me 浏览器 开发人员模式下 查看的
+        //return SecurityContextHolder.getContext().getAuthentication();
+
+        //同样，也是登录后 请求请求http://localhost:8080/user/me  浏览器和后台都会打印 登录的用户信息
+        System.out.println("getCurrentUser.authentication: " + authentication);
+        return authentication;
+    }
+
+    /**
+     * 获取认证用户信息 （部分）
+     */
+    @GetMapping("/me2")
+    public Object getCurrentUser2(@AuthenticationPrincipal UserDetails userDetails) {
+        System.out.println("getCurrentUser2.userDetails: " + userDetails);
+        return userDetails;
+    }
 
     //    @PostMapping
 //    public User create(@Valid @RequestBody User user,BindingResult errors) {
