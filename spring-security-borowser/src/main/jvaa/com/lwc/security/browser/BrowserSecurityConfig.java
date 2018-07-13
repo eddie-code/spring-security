@@ -1,6 +1,8 @@
 package com.lwc.security.browser;
 
 
+import com.lwc.security.core.properties.SecurityProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,6 +22,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private SecurityProperties securityProperties;
+
     /**
      * 4-3 自定义用户认证逻辑
      */
@@ -31,12 +36,32 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-		http.formLogin()
-//        http.httpBasic()
+//        http.formLogin()
+//                .loginPage("/lwc-signln.html")
+//                .loginProcessingUrl("/authentication/form")
+////		http.httpBasic()
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers("/lwc-signln.html").permitAll()
+//                .anyRequest()
+//                .authenticated()
+//                //登录验证需要的，不然会 404
+//                .and()
+//                .csrf().disable();
+
+        //任何接口到会跳转到 /authentication/require 接口到， 在BrowserSecurityController里面
+        http.formLogin()
+                .loginPage("/authentication/require")
+                .loginProcessingUrl("/authentication/form")
+//		http.httpBasic()
                 .and()
                 .authorizeRequests()
+                .antMatchers("/authentication/require",
+                        securityProperties.getBrowser().getLoginPage()).permitAll()
                 .anyRequest()
-                .authenticated();
+                .authenticated()
+                .and()
+                .csrf().disable();
 
     }
 

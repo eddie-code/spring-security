@@ -18,3 +18,7 @@ spring:
 #security:
 #  basic:
 #    enabled: false
+#lwc:
+#  security:
+#    browser:
+#      loginPage: /demo-signln.html
