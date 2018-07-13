@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
  * @ProjectName spring-security
  * @Package com.lwc.security.browser
  * @ClassName BrowserSecurityConfig
- * @description SpringSecurity基本原理
+ * @description SpringSecurity认证跳转
  * @date created in 2018-07-13 10:55
  * @modified by
  */

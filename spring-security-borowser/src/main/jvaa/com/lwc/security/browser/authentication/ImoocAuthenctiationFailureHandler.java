@@ -50,7 +50,6 @@ public class ImoocAuthenctiationFailureHandler extends SimpleUrlAuthenticationFa
             super.onAuthenticationFailure(request, response, exception);
         }
 
-
     }
 
 }
