@@ -15,8 +15,8 @@ import java.util.Date;
  * @date created in 2018-07-12 23:36
  * @modified by
  */
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class TimeAspect {
 
     /**
