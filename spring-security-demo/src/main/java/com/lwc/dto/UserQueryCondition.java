@@ -1,5 +1,6 @@
 package com.lwc.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -15,8 +16,10 @@ public class UserQueryCondition {
 
     private String username;
 
+    @ApiModelProperty(value = "用户年龄起值")
     private int age;
 
+    @ApiModelProperty(value = "用户年龄终值")
     private int ageTo;
 
     private String xxx;

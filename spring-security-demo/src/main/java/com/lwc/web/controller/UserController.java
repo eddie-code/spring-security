@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.lwc.dto.User;
 import com.lwc.dto.UserQueryCondition;
 import com.lwc.exception.UserNotExistException;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
@@ -47,6 +50,7 @@ public class UserController {
     }
 
     @PutMapping("/{id:\\d+}")
+    @ApiOperation(value = "查询服务")
     public User update(@Valid @RequestBody User user, BindingResult errors) {
 
         if (errors.hasErrors()) {
@@ -95,7 +99,7 @@ public class UserController {
 
     @GetMapping("/{id:\\d+}")
     @JsonView(User.UserDatailView.class)
-    public User getInfo(@PathVariable String id) {
+    public User getInfo(@ApiParam(value = "用户ID") @PathVariable String id) {
 //		throw new RuntimeException("user not exist");
         System.out.println("进入getInfo服务");
         User user = new User();
