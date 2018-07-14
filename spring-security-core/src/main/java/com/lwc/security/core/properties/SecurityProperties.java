@@ -1,5 +1,6 @@
 package com.lwc.security.core.properties;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -11,17 +12,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date created in 2018-07-13 14:37
  * @modified by
  */
+@Data
 @ConfigurationProperties(prefix = "lwc.security")
 public class SecurityProperties {
 
+    //登录验证跳转
     private BrowserProperties browser = new BrowserProperties();
 
-    public BrowserProperties getBrowser() {
-        return browser;
-    }
-
-    public void setBrowser(BrowserProperties browser) {
-        this.browser = browser;
-    }
+    //图片验证码
+    private ValidateCodeProperties code = new ValidateCodeProperties();
 
 }
