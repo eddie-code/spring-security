@@ -11,16 +11,16 @@ import lombok.Data;
  * @modified by
  */
 @Data
-public class ImageCodeProperties {
+public class ImageCodeProperties extends SmsCodeProperties {
 
-    private String url;
+
+    public ImageCodeProperties() {
+        //从父类获取 setLength 设置图形验证码长度为 4
+        setLength(4);
+    }
 
     private int width = 67;
 
     private int height = 23;
-
-    private int length = 4;
-
-    private int expireIn = 60;
 
 }

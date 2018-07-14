@@ -1,4 +1,4 @@
-package com.lwc.security.core.image;
+package com.lwc.security.core;
 
 import org.springframework.security.core.AuthenticationException;
 

@@ -1,8 +1,7 @@
 package com.lwc.code;
 
 import com.lwc.security.core.image.ImageCode;
-import com.lwc.security.core.image.ValidateCodeGenerator;
-import org.springframework.stereotype.Component;
+import com.lwc.security.core.ValidateCodeGenerator;
 import org.springframework.web.context.request.ServletWebRequest;
 
 /**

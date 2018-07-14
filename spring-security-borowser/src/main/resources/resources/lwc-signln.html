@@ -7,6 +7,8 @@
 <body>
 <h2>标准登录页面</h2>
 <h3>表单登录</h3>
+
+<!-- 图形验证码表单 start  -->
 <form action="/authentication/form" method="post">
     <table>
         <tr>
@@ -34,5 +36,30 @@
         </tr>
     </table>
 </form>
+<!-- 图形验证码表单 end  -->
+
+<!-- 短信验证码表单 start  -->
+<form action="/authentication/mobile" method="post">
+    <table>
+        <tr>
+            <td>手机号:</td>
+            <td><input type="text" name="mobile" value="13112281212"></td>
+        </tr>
+        <tr>
+            <td>短信验证码:</td>
+            <td>
+                <input type="text" name="smsCode">
+                <a href="/code/sms?mobile=13112281212">发送验证码</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">登录</button>
+            </td>
+        </tr>
+    </table>
+</form>
+<!-- 短信验证码表单 end  -->
+
 </body>
 </html>

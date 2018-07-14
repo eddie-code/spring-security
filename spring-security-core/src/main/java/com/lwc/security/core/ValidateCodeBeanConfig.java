@@ -1,6 +1,9 @@
-package com.lwc.security.core.image;
+package com.lwc.security.core;
 
+import com.lwc.security.core.image.ImageCodeGenerator;
 import com.lwc.security.core.properties.SecurityProperties;
+import com.lwc.security.core.sms.DefaultSmsCodeSender;
+import com.lwc.security.core.sms.SmsCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +31,13 @@ public class ValidateCodeBeanConfig {
         //验证码需要系统的配置信息
         codeGenerator.setSecurityProperties(securityProperties);
         return codeGenerator;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(SmsCodeSender.class) //  <-- 另外一种写法，和上面一样的
+    public SmsCodeSender smSCodeSender() {
+        System.out.println("ValidateCodeBeanConfig.smSCodeSender 不存在");
+        return new DefaultSmsCodeSender();
     }
 
 }

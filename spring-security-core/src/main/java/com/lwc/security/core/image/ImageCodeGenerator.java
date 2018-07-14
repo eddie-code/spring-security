@@ -1,9 +1,9 @@
 package com.lwc.security.core.image;
 
+import com.lwc.security.core.ValidateCodeGenerator;
 import com.lwc.security.core.properties.SecurityProperties;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -15,7 +15,7 @@ import java.util.Random;
  * @author eddie.lee
  * @Package com.lwc.security.core.image
  * @ClassName ImageCodeGenerator
- * @description 图形验证码 动态赋参数 图片形成（yml）
+ * @description 图形验证码 生成
  * @date created in 2018-07-14 1:11
  * @modified by
  */
@@ -83,13 +83,5 @@ public class ImageCodeGenerator implements ValidateCodeGenerator {
         int b = fc + random.nextInt(bc - fc);
         return new Color(r, g, b);
     }
-
-//    public SecurityProperties getSecurityProperties() {
-//        return securityProperties;
-//    }
-//
-//    public void setSecurityProperties(SecurityProperties securityProperties) {
-//        this.securityProperties = securityProperties;
-//    }
 
 }

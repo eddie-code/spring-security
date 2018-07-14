@@ -1,5 +1,6 @@
-package com.lwc.security.core.image;
+package com.lwc.security.core;
 
+import com.lwc.security.core.image.ImageCode;
 import com.lwc.security.core.properties.SecurityProperties;
 import lombok.Data;
 import org.apache.commons.lang.ArrayUtils;
@@ -91,7 +92,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     private void validate(ServletWebRequest request) throws ServletRequestBindingException {
 
         ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(request,
-                ValidateCodeController.SESSION_KEY);
+                ValidateCodeProcessor.SESSION_KEY_PREFIX+"IMAGE");
 
         String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "imageCode");
 
@@ -104,7 +105,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         }
 
         if(codeInSession.isExpried()){
-            sessionStrategy.removeAttribute(request, ValidateCodeController.SESSION_KEY);
+            sessionStrategy.removeAttribute(request, ValidateCodeProcessor.SESSION_KEY_PREFIX+"IMAGE");
             throw new ValidateCodeException("验证码已过期");
         }
 
@@ -112,7 +113,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
             throw new ValidateCodeException("验证码不匹配");
         }
 
-        sessionStrategy.removeAttribute(request, ValidateCodeController.SESSION_KEY);
+        sessionStrategy.removeAttribute(request, ValidateCodeProcessor.SESSION_KEY_PREFIX+"IMAGE");
     }
 
     public AuthenticationFailureHandler getAuthenticationFailureHandler() {
@@ -122,30 +123,5 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     public void setAuthenticationFailureHandler(AuthenticationFailureHandler authenticationFailureHandler) {
         this.authenticationFailureHandler = authenticationFailureHandler;
     }
-
-//    public SessionStrategy getSessionStrategy() {
-//        return sessionStrategy;
-//    }
-//
-//    public void setSessionStrategy(SessionStrategy sessionStrategy) {
-//        this.sessionStrategy = sessionStrategy;
-//    }
-//
-//    public Set<String> getUrls() {
-//        return urls;
-//    }
-//
-//    public void setUrls(Set<String> urls) {
-//        this.urls = urls;
-//    }
-//
-//    public SecurityProperties getSecurityProperties() {
-//        return securityProperties;
-//    }
-//
-//    public void setSecurityProperties(SecurityProperties securityProperties) {
-//        this.securityProperties = securityProperties;
-//    }
-
 
 }

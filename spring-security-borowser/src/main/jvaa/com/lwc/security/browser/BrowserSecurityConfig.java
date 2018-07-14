@@ -1,7 +1,7 @@
 package com.lwc.security.browser;
 
 
-import com.lwc.security.core.image.ValidateCodeFilter;
+import com.lwc.security.core.ValidateCodeFilter;
 import com.lwc.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -123,7 +123,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/authentication/require",
                         securityProperties.getBrowser().getLoginPage(),
-                        "/code/image").permitAll()
+                        "/code/*").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
