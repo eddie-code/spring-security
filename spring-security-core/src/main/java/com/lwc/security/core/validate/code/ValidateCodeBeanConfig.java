@@ -1,9 +1,9 @@
-package com.lwc.security.core;
+package com.lwc.security.core.validate.code;
 
-import com.lwc.security.core.image.ImageCodeGenerator;
+import com.lwc.security.core.validate.code.image.ImageCodeGenerator;
 import com.lwc.security.core.properties.SecurityProperties;
-import com.lwc.security.core.sms.DefaultSmsCodeSender;
-import com.lwc.security.core.sms.SmsCodeSender;
+import com.lwc.security.core.validate.code.sms.DefaultSmsCodeSender;
+import com.lwc.security.core.validate.code.sms.SmsCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author eddie.lee
- * @Package com.lwc.security.core.image
+ * @Package com.lwc.security.core.validate.code.image
  * @ClassName ValidateCodeBeanConfig
  * @description 图片验证 系统启动时候加载
  * @date created in 2018-07-14 0:37
@@ -24,21 +24,19 @@ public class ValidateCodeBeanConfig {
     private SecurityProperties securityProperties;
 
     @Bean
-    @ConditionalOnMissingBean(name = "imageCodeGenerator") //  <-- 系统启动时候查找是否有这个Bean,如果有就不会在加载下面的方法；
-    public ValidateCodeGenerator imageCodeGenerator() {
-        System.out.println("ValidateCodeBeanConfig.imageCodeGenerator 不存在");
+    @ConditionalOnMissingBean(name = "imageValidateCodeGenerator")
+    public ValidateCodeGenerator imageValidateCodeGenerator() {
         ImageCodeGenerator codeGenerator = new ImageCodeGenerator();
-        //验证码需要系统的配置信息
         codeGenerator.setSecurityProperties(securityProperties);
         return codeGenerator;
     }
 
     @Bean
-    @ConditionalOnMissingBean(SmsCodeSender.class) //  <-- 另外一种写法，和上面一样的
-    public SmsCodeSender smSCodeSender() {
-        System.out.println("ValidateCodeBeanConfig.smSCodeSender 不存在");
+    @ConditionalOnMissingBean(SmsCodeSender.class)
+    public SmsCodeSender smsCodeSender() {
         return new DefaultSmsCodeSender();
     }
 
 }
+
 

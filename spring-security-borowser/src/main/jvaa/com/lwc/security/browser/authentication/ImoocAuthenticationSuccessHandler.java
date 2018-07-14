@@ -1,7 +1,7 @@
 package com.lwc.security.browser.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lwc.security.core.properties.LoginType;
+import com.lwc.security.core.properties.LoginResponseType;
 import com.lwc.security.core.properties.SecurityProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,7 @@ public class ImoocAuthenticationSuccessHandler extends SavedRequestAwareAuthenti
 
         logger.info("登录成功");
 
-        if (LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
+        if (LoginResponseType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(authentication));
         } else {

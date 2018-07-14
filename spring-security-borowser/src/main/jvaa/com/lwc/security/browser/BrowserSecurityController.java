@@ -1,6 +1,7 @@
 package com.lwc.security.browser;
 
 import com.lwc.security.browser.support.SimpleResponse;
+import com.lwc.security.core.properties.SecurityConstants;
 import com.lwc.security.core.properties.SecurityProperties;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -52,25 +53,21 @@ public class BrowserSecurityController {
      * @param response
      * @return
      */
-    @RequestMapping("/authentication/require")
-    @ResponseStatus(code = HttpStatus.UNAUTHORIZED) // 401
+    @RequestMapping(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)
+    @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
     public SimpleResponse requireAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         SavedRequest savedRequest = requestCache.getRequest(request, response);
 
         if (savedRequest != null) {
             String targetUrl = savedRequest.getRedirectUrl();
-            logger.info("引发跳转的请求是:" + targetUrl);
-            if (StringUtils.endsWithIgnoreCase(targetUrl, ".html")) {
-                System.out.println("request: " + request);
-                System.out.println("response: " + response);
-                System.out.println("securityProperties: " + securityProperties.getBrowser().getLoginPage());
+            logger.info("引发跳转的请求是:"+targetUrl);
+            if(StringUtils.endsWithIgnoreCase(targetUrl, ".html")){
                 redirectStrategy.sendRedirect(request, response, securityProperties.getBrowser().getLoginPage());
             }
         }
 
         return new SimpleResponse("访问的服务需要身份认证，请引导用户到登录页");
-
     }
 
 }

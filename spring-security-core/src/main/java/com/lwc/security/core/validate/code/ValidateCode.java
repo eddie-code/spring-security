@@ -1,4 +1,4 @@
-package com.lwc.security.core;
+package com.lwc.security.core.validate.code;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 /**
  * @author eddie.lee
- * @Package com.lwc.security.core.image
+ * @Package com.lwc.security.core.validate.code.image
  * @ClassName ImageCode
  * @description 短信验证码
  * @date created in 2018-07-14 0:28

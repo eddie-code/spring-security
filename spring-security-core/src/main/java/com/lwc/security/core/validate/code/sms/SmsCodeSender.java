@@ -1,8 +1,8 @@
-package com.lwc.security.core.sms;
+package com.lwc.security.core.validate.code.sms;
 
 /**
  * @author eddie.lee
- * @Package com.lwc.security.core.sms
+ * @Package com.lwc.security.core.validate.code.sms
  * @ClassName SmSCodeSender
  * @description 模拟短信第三方接口
  * @date created in 2018-07-14 13:48

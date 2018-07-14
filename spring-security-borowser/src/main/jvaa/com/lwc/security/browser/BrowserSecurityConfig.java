@@ -1,18 +1,18 @@
 package com.lwc.security.browser;
 
 
-import com.lwc.security.core.ValidateCodeFilter;
+import com.lwc.security.core.validate.code.ValidateCodeSecurityConfig;
+import com.lwc.security.core.authentication.AbstractChannelSecurityConfig;
+import com.lwc.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
+import com.lwc.security.core.properties.SecurityConstants;
 import com.lwc.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -28,19 +28,22 @@ import javax.sql.DataSource;
  * @modified by
  */
 @Configuration
-public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
+public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
 
     @Autowired
     private SecurityProperties securityProperties;
 
     @Autowired
-    private AuthenticationSuccessHandler authenticationSuccessHandler;
-
-    @Autowired
-    private AuthenticationFailureHandler authenticationFailureHandler;
-
-    @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+
+    @Autowired
+    private ValidateCodeSecurityConfig validateCodeSecurityConfig;
 
     /**
      * 4-3 自定义用户认证逻辑
@@ -66,64 +69,24 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        //普通用户登录认证跳转
-//        http.formLogin()
-//                .loginPage("/lwc-signln.html")
-//                .loginProcessingUrl("/authentication/form")
-////		http.httpBasic()
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers("/lwc-signln.html").permitAll()
-//                .anyRequest()
-//                .authenticated()
-//                //登录验证需要的，不然会 404
-//                .and()
-//                .csrf().disable();
+        applyPasswordAuthenticationConfig(http);
 
-        //任何接口到会跳转到 /authentication/require 接口到， 在BrowserSecurityController里面
-//        http.formLogin()
-//                .loginPage("/authentication/require")
-//                .loginProcessingUrl("/authentication/form")
-//                .successHandler(authenticationSuccessHandler)
-//                .failureHandler(authenticationFailureHandler)
-////		http.httpBasic()
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers("/authentication/require",
-//                        securityProperties.getBrowser().getLoginPage()).permitAll()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .csrf().disable();
-//
-
-        ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
-        validateCodeFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
-        //图形验证码登录
-        validateCodeFilter.setSecurityProperties(securityProperties);
-        validateCodeFilter.afterPropertiesSet();
-
-        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
-                .formLogin()
-                .loginPage("/authentication/require")
-                //提交后由UsernamePasswordAuthenticationFilter处理
-                .loginProcessingUrl("/authentication/form")
-                .successHandler(authenticationSuccessHandler)
-                .failureHandler(authenticationFailureHandler)
-                //“记住我”功能 --start
-                //如果想在“记住我”登录时记录日志，可以注册一个InteractiveAuthenticationSuccessEvent事件的监听器
+        http.apply(validateCodeSecurityConfig)
+                .and()
+                .apply(smsCodeAuthenticationSecurityConfig)
                 .and()
                 .rememberMe()
                 .tokenRepository(persistentTokenRepository())
                 .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())
-                .userDetailsService(userDetailsService())
-                //“记住我”功能 --end
-//		http.httpBasic()
+                .userDetailsService(userDetailsService)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authentication/require",
+                .antMatchers(
+                        SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
+                        SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
                         securityProperties.getBrowser().getLoginPage(),
-                        "/code/*").permitAll()
+                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

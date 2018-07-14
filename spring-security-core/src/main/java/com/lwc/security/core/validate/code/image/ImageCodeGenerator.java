@@ -1,6 +1,6 @@
-package com.lwc.security.core.image;
+package com.lwc.security.core.validate.code.image;
 
-import com.lwc.security.core.ValidateCodeGenerator;
+import com.lwc.security.core.validate.code.ValidateCodeGenerator;
 import com.lwc.security.core.properties.SecurityProperties;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import java.util.Random;
 
 /**
  * @author eddie.lee
- * @Package com.lwc.security.core.image
+ * @Package com.lwc.security.core.validate.code.image
  * @ClassName ImageCodeGenerator
  * @description 图形验证码 生成
  * @date created in 2018-07-14 1:11

@@ -15,14 +15,14 @@ import lombok.Data;
 public class BrowserProperties {
 
     //登录认证页面
-    private String loginPage = "/lwc-signln.html";
+    private String loginPage = SecurityConstants.DEFAULT_LOGIN_PAGE_URL;
 
     /**
      * ----------------------------------------------------------------------------------
      **/
 
     //登录认证返回 JSON格式
-    private LoginType loginType = LoginType.JSON;
+    private LoginResponseType loginType = LoginResponseType.JSON;
 
 
     /**

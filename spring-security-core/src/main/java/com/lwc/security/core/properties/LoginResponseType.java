@@ -9,10 +9,17 @@ package com.lwc.security.core.properties;
  * @date created in 2018-07-13 15:41
  * @modified by
  */
-public enum LoginType {
+public enum LoginResponseType {
 
+    /**
+     * 跳转
+     */
     REDIRECT,
 
+    /**
+     * 返回json
+     */
     JSON
+
 
 }

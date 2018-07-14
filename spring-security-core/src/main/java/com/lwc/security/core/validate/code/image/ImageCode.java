@@ -1,6 +1,6 @@
-package com.lwc.security.core.image;
+package com.lwc.security.core.validate.code.image;
 
-import com.lwc.security.core.ValidateCode;
+import com.lwc.security.core.validate.code.ValidateCode;
 import lombok.Data;
 
 import java.awt.image.BufferedImage;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 /**
  * @author eddie.lee
- * @Package com.lwc.security.core.image
+ * @Package com.lwc.security.core.validate.code.image
  * @ClassName ImageCode
  * @description 图片验证码
  * @date created in 2018-07-14 0:28
