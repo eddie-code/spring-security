@@ -2,6 +2,7 @@ package com.lwc.security.core.image;
 
 import com.lwc.security.core.properties.SecurityProperties;
 import lombok.Data;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -51,8 +52,10 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         super.afterPropertiesSet();
         // 从SecurityProperties配置获取url,使用逗号分隔；
         String[] configUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(securityProperties.getCode().getImage().getUrl(), ",");
-        for (String configUrl : configUrls) {
-            urls.add(configUrl);
+        if(ArrayUtils.isNotEmpty(configUrls)){
+            for (String configUrl : configUrls) {
+                urls.add(configUrl);
+            }
         }
         //登录认证请求是必需的；
         urls.add("/authentication/form");

@@ -16,7 +16,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "lwc.security")
 public class SecurityProperties {
 
-    //登录验证跳转
+    //登录验证跳转, 记住我功能
     private BrowserProperties browser = new BrowserProperties();
 
     //图片验证码

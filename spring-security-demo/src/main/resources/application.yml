@@ -5,8 +5,8 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: 123456
-    url: jdbc:mysql://127.0.0.1:3306/test?characterEncoding=utf-8&useSSL=false
-    #url: jdbc:mysql://192.168.1.113:3306/test01?characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://192.168.56.101:3306/imooc-demo?useUnicode=yes&characterEncoding=UTF-8&useSSL=false
+    #url: jdbc:mysql://192.168.1.113:3306/imooc-demo?useUnicode=yes&characterEncoding=UTF-8&useSSL=false
 #  关闭Session，因为会报错
   session:
     store-type: none
@@ -16,13 +16,13 @@ spring:
     port: 6379
 lwc:
   security:
-#    browser:
-#      loginType: REDIRECT #重定向
-    code:
-      image:
-        url: /user/*
-        lenght: 6
-        width: 100
+    browser:
+      loginType: REDIRECT #重定向到 index.html
+#    code:
+#      image:
+#        url: /user/*
+#        lenght: 6
+#        width: 100
 #    暂时关闭身份验证，因为访问 http://localhost:8080/hello 会弹出验证框
 #security:
 #  basic:
